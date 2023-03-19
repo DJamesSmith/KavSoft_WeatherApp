@@ -1,9 +1,13 @@
 import SwiftUI
+import SpriteKit
 
 struct Home: View {
     
     @State var offset: CGFloat = 0
     var topEdge: CGFloat
+    
+    // To avoid early starting landing animation, we're going to delay the startValue
+    @State var showRain = false
     
     var body: some View {
         
@@ -11,7 +15,7 @@ struct Home: View {
             
             // GeometryReader for height & width
             GeometryReader { proxy in
-                Image("sky1")
+                Image("sky")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: proxy.size.width, height: proxy.size.height)
@@ -20,7 +24,16 @@ struct Home: View {
             // Blur material
             .overlay(.ultraThinMaterial)
             
-            // Main View
+            // MARK: RainFall View
+            // Maybe it's a bug (while scrollingn it gets restarted). To avoid, use GeometryReader.
+            GeometryReader { _ in
+                SpriteView(scene: RainFall(), options: [.allowsTransparency])
+            }
+            .ignoresSafeArea()
+            .opacity(showRain ? 1 : 0)
+            
+            
+            // MARK: Main View
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     
@@ -28,7 +41,6 @@ struct Home: View {
                     VStack(alignment: .center, spacing: 5) {
                         
                         Text("San Jose")
-                            .padding(.top, 60)
                             .font(.system(size: 35))
                             .foregroundStyle(.white)
                             .shadow(radius: 5)
@@ -58,7 +70,7 @@ struct Home: View {
                     .offset(y: offset > 0 ? (offset / UIScreen.main.bounds.width) * 100 : 0)
                     .offset(y: getTitleOffset())
                     
-                    // Custom Data View
+                    // MARK: Custom Data View
                     VStack(spacing: 8) {
                         // Custom Stack
                         CustomStackView {
@@ -104,9 +116,19 @@ struct Home: View {
                         }
                         WeatherDataView()
                     }
+                    .background(
+                        GeometryReader { _ in
+                            SpriteView(scene: RainFallLanding(), options: [.allowsTransparency])
+                                .offset(y: -10)
+                        }
+                            .offset(y: -(offset + topEdge) > 90 ? -(offset + (90 + topEdge)) : 0)
+                            .opacity(showRain ? 1 : 0)
+                    )
+                    .padding(.top, 20)
                     
                 }
                 .padding(.top, 25)
+                .padding(.top, topEdge)
                 .padding([.horizontal, .bottom])
                 
                 // Getting Offset
@@ -116,11 +138,22 @@ struct Home: View {
                         
                         DispatchQueue.main.async {
                             self.offset = minY
+                            // Including topEdge since we ignored topEdge on mainView
+//                            print("\(minY + topEdge)")
+                            // Approx 90, since we including topEdge
+                            // So the values will be same for smaller devices too
                         }
                         
                         return Color.clear
                     }
                 )
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                withAnimation {
+                    showRain = true
+                }
             }
         }
         
@@ -184,5 +217,51 @@ struct ForecastView: View {
     }
 }
 
+// MARK: Creating Rain/Snow Effect like iOS 15 WeatherApp - SpriteKit Rain Scene
 
-// 18:30
+class RainFall: SKScene {
+    override func sceneDidLoad() {
+        
+        size = UIScreen.main.bounds.size
+        scaleMode = .resizeFill
+        
+        // Anchor Point
+        anchorPoint = CGPoint(x: 0.5, y: 1)
+        
+        // BgColor
+        backgroundColor = .clear
+        
+        // Creating node & adding to scene
+        let node = SKEmitterNode(fileNamed: "RainFall.sks")!
+        addChild(node)
+        
+        // Full width
+        node.particlePositionRange.dx = UIScreen.main.bounds.width
+        
+    }
+}
+
+// Next RainFall Landing Scene
+class RainFallLanding: SKScene {
+    override func sceneDidLoad() {
+        
+        size = UIScreen.main.bounds.size
+        scaleMode = .resizeFill
+        
+        // Anchor Point
+        let height = UIScreen.main.bounds.height
+        // Getting % by emitting position range
+        anchorPoint = CGPoint(x: 0.5, y: (height - 5) / height)
+        
+        // BgColor
+        backgroundColor = .clear
+        
+        // Creating node & adding to scene
+        let node = SKEmitterNode(fileNamed: "RainFallLanding.sks")!
+        addChild(node)
+        
+        // Removed for card padding
+        node.particlePositionRange.dx = UIScreen.main.bounds.width - 30
+        
+    }
+}

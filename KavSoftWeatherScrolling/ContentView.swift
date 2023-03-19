@@ -8,7 +8,7 @@ struct ContentView: View {
 
             let topEdge = proxy.safeAreaInsets.top
             Home(topEdge: topEdge)
-//                .ignoresSafeArea(.all, edges: .top)
+                .ignoresSafeArea(.all, edges: .top)
         }
         
         

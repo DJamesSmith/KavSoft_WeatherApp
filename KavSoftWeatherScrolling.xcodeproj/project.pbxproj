@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		245F89BD29C76B73009CBDEF /* RainFall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 245F89BB29C76B73009CBDEF /* RainFall.sks */; };
+		245F89C129C77DB4009CBDEF /* RainFallLanding.sks in Resources */ = {isa = PBXBuildFile; fileRef = 245F89BF29C77DB4009CBDEF /* RainFallLanding.sks */; };
 		24AABBB229C6410C0092FCF2 /* WeatherDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AABBB129C6410C0092FCF2 /* WeatherDataView.swift */; };
 		24AABBB429C644E50092FCF2 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AABBB329C644E50092FCF2 /* Forecast.swift */; };
 		24B4582B29C5AB06009ACBD9 /* KavSoftWeatherScrollingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B4582A29C5AB06009ACBD9 /* KavSoftWeatherScrollingApp.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		245F89BB29C76B73009CBDEF /* RainFall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainFall.sks; sourceTree = "<group>"; };
+		245F89BF29C77DB4009CBDEF /* RainFallLanding.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainFallLanding.sks; sourceTree = "<group>"; };
 		24AABBB129C6410C0092FCF2 /* WeatherDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataView.swift; sourceTree = "<group>"; };
 		24AABBB329C644E50092FCF2 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		24B4582729C5AB06009ACBD9 /* KavSoftWeatherScrolling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KavSoftWeatherScrolling.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +46,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		245F89BA29C76B0B009CBDEF /* SpriteFiles */ = {
+			isa = PBXGroup;
+			children = (
+				245F89BB29C76B73009CBDEF /* RainFall.sks */,
+				245F89BF29C77DB4009CBDEF /* RainFallLanding.sks */,
+			);
+			path = SpriteFiles;
+			sourceTree = "<group>";
+		};
 		24B4581E29C5AB06009ACBD9 = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +74,7 @@
 		24B4582929C5AB06009ACBD9 /* KavSoftWeatherScrolling */ = {
 			isa = PBXGroup;
 			children = (
+				245F89BA29C76B0B009CBDEF /* SpriteFiles */,
 				24B4583929C5ADA6009ACBD9 /* View */,
 				24B4583829C5ADA0009ACBD9 /* Model */,
 				24B4582A29C5AB06009ACBD9 /* KavSoftWeatherScrollingApp.swift */,
@@ -156,8 +170,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245F89C129C77DB4009CBDEF /* RainFallLanding.sks in Resources */,
 				24B4583229C5AB07009ACBD9 /* Preview Assets.xcassets in Resources */,
 				24B4582F29C5AB07009ACBD9 /* Assets.xcassets in Resources */,
+				245F89BD29C76B73009CBDEF /* RainFall.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
